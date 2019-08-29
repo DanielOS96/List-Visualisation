@@ -2,7 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
-
+/*
+ * -----------Class Description----------------
+ * This script is the ovveriding behaviour for
+ * the model class. This script is giving the
+ * model file browsing logic.
+ * --------------------------------------------
+ */
 public class DirectoryNavigation : Model
 {
     public string pathToSearch;

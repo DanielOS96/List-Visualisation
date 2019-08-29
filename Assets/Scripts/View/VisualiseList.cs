@@ -194,10 +194,11 @@ public class VisualiseList : MonoBehaviour
     private void ShowItemIconGameObject(ListObjectInfo item, GameObject itemGameObject)
     {
         GameObject itemIcon = item.IconModel;
+        Vector3 scale = item.IconModel.transform.localScale;
         GameObject spawnedIcon = Instantiate(itemIcon, gameObject.transform);
         spawnedIcon.transform.SetParent(itemGameObject.transform);
         spawnedIcon.transform.localPosition = Vector3.zero;
-        spawnedIcon.transform.localScale = new Vector3 (1,1,1);
+        spawnedIcon.transform.localScale = scale;
     }
 
     #endregion

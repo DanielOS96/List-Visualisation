@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 /*
  * -------------Class Description---------------------------------------------------------
- * 
+ *
  * This scipt can be thought of as a gateway between the model backend and the controller.
  * This script will remain the same even if the rest of the model backend is swapped out.
  * i.e. the directory list generator is swapped for a manufacturing part list generator.
@@ -23,7 +23,8 @@ using UnityEngine;
 
 /// <summary>
 /// This script will:
-/// <para/>Be overwritten to add custom data processing functionality.
+/// <para/>Be overwritten to add custom data processing functionality. 
+/// i.e. file browsing.
 /// </summary>
 public class Model : MonoBehaviour
 {
