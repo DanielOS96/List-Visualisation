@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
 /// This script component will be added to the gameobject listobject.
-/// <para/> (This is part of the 'View' structure)
+/// <para/> (This is a sub-script of View)
 /// </summary>
 public class ListObjectInstance : MonoBehaviour
 {

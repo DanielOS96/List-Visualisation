@@ -7,6 +7,9 @@ using System.IO;
  * This script is the ovveriding behaviour for
  * the model class. This script is giving the
  * model file browsing logic.
+ * 
+ * This is the script that will contain anything
+ * related to file browsing specifically.
  * --------------------------------------------
  */
 public class DirectoryNavigation : Model

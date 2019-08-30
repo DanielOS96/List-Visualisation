@@ -1284,6 +1284,7 @@ GameObject:
   m_Component:
   - component: {fileID: 617588817}
   - component: {fileID: 617588816}
+  - component: {fileID: 617588820}
   - component: {fileID: 617588818}
   - component: {fileID: 617588819}
   m_Layer: 0
@@ -1306,14 +1307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemInfoPanel: {fileID: 1950482850}
-  listItemObjectPrefab: {fileID: 234941150789193798, guid: 34fc741f38d1d1a42bb8582103cce625,
-    type: 3}
-  spawnEffectPrefab: {fileID: 7206592611126436980, guid: 368b11ee09a8d1f4a83ea70f21c32ad2,
-    type: 3}
-  distBetweenItemCenter: 0.7
-  itemsInRow: 3
-  source: {fileID: 617588818}
-  spawnSound: {fileID: 8300000, guid: af3a39e5c50b97846a0a18474df0288a, type: 3}
+  listBuilder: {fileID: 617588820}
 --- !u!4 &617588817
 Transform:
   m_ObjectHideFlags: 0
@@ -1437,6 +1431,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationDegrees: 20
+--- !u!114 &617588820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 617588815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b2c54f645e00fb409e5599a9e806557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listItemObjectPrefab: {fileID: 234941150789193798, guid: 34fc741f38d1d1a42bb8582103cce625,
+    type: 3}
+  spawnEffectPrefab: {fileID: 7206592611126436980, guid: 368b11ee09a8d1f4a83ea70f21c32ad2,
+    type: 3}
+  distBetweenItemCenter: 0.7
+  itemsInRow: 3
+  source: {fileID: 617588818}
+  spawnSound: {fileID: 8300000, guid: af3a39e5c50b97846a0a18474df0288a, type: 3}
 --- !u!1 &686276569
 GameObject:
   m_ObjectHideFlags: 0

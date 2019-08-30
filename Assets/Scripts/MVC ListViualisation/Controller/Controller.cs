@@ -34,6 +34,7 @@ public class Controller : MonoBehaviour
         if (buildListOnAwake) modelReferance.BuildList();
     }
 
+
     #region Event Subscriptions
     private void OnEnable()
     {
@@ -56,7 +57,7 @@ public class Controller : MonoBehaviour
 
 
     
-
+    //Called by a button gameobject.
     public void PreviousList()
     {
         modelReferance.PreviousList();
@@ -65,25 +66,19 @@ public class Controller : MonoBehaviour
 
     private void OnItemSelected(ListObjectInfo item)
     {
-        //Debug.Log("Name: "+item.ObjectName+"    Type: "+item.ObjectType+"   Info: "+item.ObjectInfo);
         modelReferance.ItemSelected(item);
         viewReferance.DisplayItemInfo(item, true);
     }
     private void OnItemHovered(ListObjectInfo item)
     {
-        //Debug.Log("Name: " + item.ObjectName + "    Type: " + item.ObjectType + "   Info: " + item.ObjectInfo);
         viewReferance.DisplayItemInfo(item);
 
     }
     private void OnItemUnHovered(ListObjectInfo item)
     {
-        //Debug.Log("Name: " + item.ObjectName + "    Type: " + item.ObjectType + "   Info: " + item.ObjectInfo);
         viewReferance.ClearItemInfo();
     }
 
-    //This is called once the controller hears the list is ready
-    //from the model. Then it gets the list from the model.
-    //and passes it of into the view.
     private void SetListView(List<ListObjectInfo> passedList)
     {
         viewReferance.ClearList();

@@ -22,8 +22,7 @@ using UnityEngine;
  */
 
 /// <summary>
-/// This script will:
-/// <para/>Be overwritten to add custom data processing functionality. 
+/// This script will be overwritten to add custom data processing functionality. 
 /// i.e. file browsing.
 /// </summary>
 public class Model : MonoBehaviour

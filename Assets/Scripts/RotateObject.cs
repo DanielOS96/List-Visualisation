@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Rotate gameobject around its center pivot.
+/// </summary>
 public class RotateObject : MonoBehaviour
 {
     public float rotationDegrees = 20;
