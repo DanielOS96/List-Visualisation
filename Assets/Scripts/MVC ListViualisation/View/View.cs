@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 /* 
@@ -19,7 +20,7 @@ using UnityEngine.UI;
 /// This script will:
 /// <para/>Handle the graphical side of spawning the list.
 /// </summary>
-public class VisualiseList : MonoBehaviour
+public class View : MonoBehaviour
 {
 
     public delegate void OnInteractEvents(ListObjectInfo item);
@@ -36,8 +37,27 @@ public class VisualiseList : MonoBehaviour
     public float distBetweenItemCenter = 1;     //The distance between the center of the items.
     [Range(1, 10)]
     public int itemsInRow = 3;                  //The number of items in the row.
+    [Header("Audio")]
+    public AudioSource source;
+    public AudioClip spawnSound;
 
 
+    #region Item Controls
+    public void DisplayItemInfo(ListObjectInfo item, bool showAllInfo = false)
+    {
+        itemInfoPanel.SetText(item.ObjectName);
+
+
+        if (showAllInfo)
+        {
+            itemInfoPanel.SetText(item.ObjectName, item.ObjectType, item.ObjectInfo);
+        }
+    }
+    public void ClearItemInfo()
+    {
+        itemInfoPanel.ClearText();
+    }
+    #endregion
 
 
     #region List Controls
@@ -54,21 +74,6 @@ public class VisualiseList : MonoBehaviour
     public void InitializeList(List<ListObjectInfo> thisList)
     {
         StartCoroutine(ShowList(thisList));
-    }
-
-    public void DisplayItemInfo(ListObjectInfo item, bool showAllInfo = false)
-    {
-        itemInfoPanel.SetText(item.ObjectName);
-
-
-        if (showAllInfo)
-        {
-            itemInfoPanel.SetText(item.ObjectName, item.ObjectType, item.ObjectInfo);
-        }
-    }
-    public void ClearItemInfo()
-    {
-        itemInfoPanel.ClearText();
     }
 
     #endregion
@@ -120,6 +125,7 @@ public class VisualiseList : MonoBehaviour
         float spawnTime = (float)1.5f / thisList.Count;
         if (thisList.Count <= 3) spawnTime = 0.2f;
 
+
         //Check each item in given list.
         foreach (ListObjectInfo item in thisList)
         {
@@ -140,23 +146,27 @@ public class VisualiseList : MonoBehaviour
                 spawnZ += distBetweenItemCenter;
             }
 
+            //Play the spawning sound.
+            source.PlayOneShot(spawnSound);
+
             //Wait for spawn to finish.
             yield return StartCoroutine(SpawnItem(new Vector3(spawnX,spawnY,spawnZ),item, spawnTime));
 
             spawnX+=distBetweenItemCenter;
             count++;
         }
+
     }
 
     private IEnumerator SpawnItem(Vector3 spawnPosition, ListObjectInfo item, float spawnTime)
     {
         //The drop start position is slightly above spawn position by the ammount of the distance between items
-        GameObject itemVisualRepresentation = Instantiate(listItemObjectPrefab, transform.position+ spawnPosition, listItemObjectPrefab.transform.rotation);
+        GameObject itemVisualRepresentation = Instantiate(listItemObjectPrefab, transform.position+ spawnPosition, transform.localRotation);
         Vector3 dropStartPos = new Vector3(spawnPosition.x, spawnPosition.y + distBetweenItemCenter, spawnPosition.z);
 
         itemVisualRepresentation.transform.SetParent(gameObject.transform);
         itemVisualRepresentation.name = item.ObjectName;
-        itemVisualRepresentation.transform.position = transform.position + dropStartPos;
+        itemVisualRepresentation.transform.localPosition = dropStartPos;
 
         //Give the item information about what it is.
         itemVisualRepresentation.GetComponent<ListObjectInstance>().item = item;
@@ -165,7 +175,7 @@ public class VisualiseList : MonoBehaviour
         if (item.IconModel != null) ShowItemIconGameObject(item, itemVisualRepresentation);
 
         //Wait for move to finish.
-        yield return StartCoroutine(MoveOverSeconds(itemVisualRepresentation.transform, spawnPosition, spawnTime));
+        yield return StartCoroutine(MoveOverSeconds(itemVisualRepresentation.transform,dropStartPos, spawnPosition, spawnTime));
 
         //Instantiate particle effects.
         if (spawnEffectPrefab!=null)Destroy(Instantiate(spawnEffectPrefab, itemVisualRepresentation.transform),0.5f);
@@ -174,20 +184,18 @@ public class VisualiseList : MonoBehaviour
 
     
 
-
-    private IEnumerator MoveOverSeconds(Transform objectToMove, Vector3 end, float seconds)
+    private IEnumerator MoveOverSeconds(Transform objectToMove,Vector3 start, Vector3 end,float seconds)
     {
         float elapsedTime = 0;
-        Vector3 startingPos = objectToMove.transform.position;
 
         while (elapsedTime < seconds)
         {
-            objectToMove.transform.position = Vector3.Lerp(startingPos, transform.position + end, (elapsedTime / seconds));
+            objectToMove.transform.localPosition = Vector3.Lerp(start, end, (elapsedTime / seconds));
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
 
-        objectToMove.transform.position = transform.position+end;
+        objectToMove.transform.localPosition = end;
     }
 
 

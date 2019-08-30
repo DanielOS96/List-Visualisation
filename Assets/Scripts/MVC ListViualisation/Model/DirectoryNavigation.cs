@@ -12,6 +12,7 @@ using System.IO;
 public class DirectoryNavigation : Model
 {
     public string pathToSearch;
+    public GameObject renderTarget;
 
 
     [Header("Grahphical Icons")]
@@ -71,7 +72,7 @@ public class DirectoryNavigation : Model
     private void FileSelected(ListObjectInfo file)
     {
         Debug.Log("Open File");
-
+        LoadPNG(file.ObjectInfo);
     }
 
 
@@ -161,15 +162,6 @@ public class DirectoryNavigation : Model
 
     private void LoadPNG(string filePath)
     {
-
-
-        GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
-        quad.transform.SetParent(transform);
-        quad.transform.localPosition = Vector3.zero;
-        quad.transform.localScale = new Vector3(1, 1, 1);
-
-
-        print(filePath);
         Texture2D tex = null;
         byte[] fileData;
 
@@ -178,7 +170,7 @@ public class DirectoryNavigation : Model
             fileData = File.ReadAllBytes(filePath);
             tex = new Texture2D(2, 2);
             tex.LoadImage(fileData); //..this will auto-resize the texture dimensions.
-            quad.GetComponent<Renderer>().material.mainTexture = tex;
+            renderTarget.GetComponent<Renderer>().material.mainTexture = tex;
         }
 
     }

@@ -23,10 +23,10 @@ public class Controller : MonoBehaviour
 {
 
 
-    public VisualiseList viewReferance;
-    public Model modelReferance;
+    public View viewReferance;          //Referance to the View script.
+    public Model modelReferance;        //Referance to the Model script.
 
-    public bool buildListOnAwake;
+    public bool buildListOnAwake;       //Build list on awake.
 
 
     private void Start()
