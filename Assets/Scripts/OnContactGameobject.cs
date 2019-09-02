@@ -19,8 +19,6 @@ public class OnContactGameobject : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log(collision.gameObject.name);
-
         ListObjectInstance itemInstance = collision.gameObject.GetComponent<ListObjectInstance>();
 
         if (itemInstance != null)
@@ -33,9 +31,6 @@ public class OnContactGameobject : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log(other.gameObject.name);
-
-
         ListObjectInstance itemInstance = other.gameObject.GetComponent<ListObjectInstance>();
 
         if (itemInstance != null)

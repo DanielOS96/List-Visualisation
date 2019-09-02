@@ -1430,7 +1430,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bee919b78eac8541a7c658be0eadf88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationDegrees: 20
+  rotationDegrees: 40
 --- !u!114 &617588820
 MonoBehaviour:
   m_ObjectHideFlags: 0
