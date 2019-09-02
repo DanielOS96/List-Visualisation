@@ -7,6 +7,7 @@ To change the data source the model just needs to be swapped out. In this projec
 </br></br></br>
 The control panel allows for interaction with the list. 
 The included enemy AI has behaviours for the following:
+
 * Left arrow rotates the entire list left.
 * Right arrow rotates the entire list right.
 * Up arrow moves up a directory.
