@@ -1,3 +1,4 @@
+<i>Disclaimer: This is a very simplistic approach to the Model View Controller and was built more to help me understand the pattern more than creating a complex version of an MVC.</i>
 
 <h1>List Visualiser</h1>
 This code is architected in the Model View Controller pattern. 
