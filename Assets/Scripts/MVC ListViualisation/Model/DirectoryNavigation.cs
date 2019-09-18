@@ -46,6 +46,13 @@ public class DirectoryNavigation : Model
 
         if (MoveUpDirectory()) BuildList();
     }
+    public override void ItemMoved(ListObjectInfo item)
+    {
+        base.ItemMoved(item);
+
+        FileMoved(item);
+
+    }
     public override void ItemSelected(ListObjectInfo item)
     {
         base.ItemSelected(item);
@@ -66,6 +73,14 @@ public class DirectoryNavigation : Model
 
 
 
+
+
+
+
+
+
+
+
     private void FolderSelected(ListObjectInfo folder)
     {
         //Debug.Log("Open Folder");
@@ -76,6 +91,18 @@ public class DirectoryNavigation : Model
     {
         Debug.Log("Open File");
         LoadPNG(file.ObjectInfo);
+    }
+    private void FileMoved(ListObjectInfo file)
+    {
+        string destinationURL = pathToSearch;
+        string originURL = file.ObjectInfo;
+
+        Debug.Log("Moving, Origin: " + originURL + " Destination: " + destinationURL+"/"+file.ObjectName);
+
+        File.Move(originURL, destinationURL+"/"+file.ObjectName);
+
+       
+        BuildList();
     }
 
 
@@ -100,6 +127,7 @@ public class DirectoryNavigation : Model
         }
        
     }
+
 
 
     //Return a list of files as'ListObjects' found at a directory.

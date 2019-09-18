@@ -27,11 +27,11 @@ public class View : MonoBehaviour
     public OnInteractEvents onSelected;
     public OnInteractEvents onHovered;
     public OnInteractEvents onUnHovered;
+    public OnInteractEvents onMoved;
 
 
     public InfoPanel itemInfoPanel;             //Referance to the information panel script.
     public ListBuilder listBuilder;             //Referance to the list builder script.
-
 
 
     #region Item Controls
@@ -107,6 +107,15 @@ public class View : MonoBehaviour
     {
         if (onUnHovered != null) onUnHovered(item);
 
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="origin">Origin list</param>
+    /// <param name="destination">Destination list</param>
+    public void CallItemMovedEvent(ListObjectInfo item)
+    {
+        if (onMoved != null) onMoved(item);
     }
     #endregion
 

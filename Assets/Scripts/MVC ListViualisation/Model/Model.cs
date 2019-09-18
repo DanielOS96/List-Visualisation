@@ -41,6 +41,11 @@ public class Model : MonoBehaviour
         //Debug.Log("Previous List...");
     }
 
+    public virtual void ItemMoved(ListObjectInfo item)
+    {
+        //Debug.Log("Move List..."+originList+" to "+destinationList);
+    }
+
     public virtual void ItemSelected(ListObjectInfo item)
     {
         //Debug.Log("Item Selected... "+ item.ObjectName);

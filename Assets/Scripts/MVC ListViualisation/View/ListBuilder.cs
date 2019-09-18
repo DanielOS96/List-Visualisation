@@ -19,6 +19,7 @@ public class ListBuilder : MonoBehaviour
     public AudioSource source;
     public AudioClip spawnSound;
 
+    private Vector3 originPoition;
 
     /// <summary>
     /// Build list of 'ListObjectInfo' objects in physical gameobject form.
@@ -148,4 +149,5 @@ public class ListBuilder : MonoBehaviour
         spawnedIcon.transform.localPosition = Vector3.zero;
         spawnedIcon.transform.localScale = scale;
     }
+
 }

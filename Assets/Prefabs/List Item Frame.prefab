@@ -932,6 +932,7 @@ GameObject:
   - component: {fileID: -3629846112332875576}
   - component: {fileID: 6817370383942571106}
   - component: {fileID: 1000752294}
+  - component: {fileID: -2102365399389916885}
   m_Layer: 0
   m_Name: List Item Frame
   m_TagString: Untagged
@@ -1018,6 +1019,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: -2102365399389916885}
+        m_MethodName: Enlarge
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   mouseUnHover:
@@ -1025,6 +1037,17 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6817370383942571106}
         m_MethodName: ItemUnHovered
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -2102365399389916885}
+        m_MethodName: ReturnToOriginalSize
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1053,6 +1076,7 @@ MonoBehaviour:
     ObjectType: 
     ObjectInfo: 
     IconModel: {fileID: 0}
+  itemSelected: 0
 --- !u!65 &1000752294
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1066,6 +1090,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-2102365399389916885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234941150789193798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb879befc6150246bc116147324bea8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  percentSize: 10
 --- !u!1 &234941150810216084
 GameObject:
   m_ObjectHideFlags: 0

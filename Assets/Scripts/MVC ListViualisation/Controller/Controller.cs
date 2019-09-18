@@ -42,6 +42,7 @@ public class Controller : MonoBehaviour
         viewReferance.onSelected += OnItemSelected;
         viewReferance.onHovered += OnItemHovered;
         viewReferance.onUnHovered += OnItemUnHovered;
+        viewReferance.onMoved += OnItemMoved;
 
     }
     private void OnDisable()
@@ -50,13 +51,14 @@ public class Controller : MonoBehaviour
         viewReferance.onSelected -= OnItemSelected;
         viewReferance.onHovered -= OnItemHovered;
         viewReferance.onUnHovered -= OnItemUnHovered;
+        viewReferance.onMoved -= OnItemMoved;
 
 
     }
     #endregion
 
 
-    
+
     //Called by a button gameobject.
     public void PreviousList()
     {
@@ -68,6 +70,11 @@ public class Controller : MonoBehaviour
     {
         modelReferance.ItemSelected(item);
         viewReferance.DisplayItemInfo(item, true);
+    }
+
+    private void OnItemMoved(ListObjectInfo item)
+    {
+        modelReferance.ItemMoved(item);
     }
     private void OnItemHovered(ListObjectInfo item)
     {

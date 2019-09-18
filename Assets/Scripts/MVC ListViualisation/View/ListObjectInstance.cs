@@ -10,6 +10,8 @@ public class ListObjectInstance : MonoBehaviour
 
     public ListObjectInfo item; //The item information for this object.
 
+    public bool itemSelected;
+
 
 
     /*
@@ -25,6 +27,22 @@ public class ListObjectInstance : MonoBehaviour
      */
     public void ItemSelected()
     {
+        //Select this item.
+        itemSelected = true;
+
+        //unselect all other items.
+        /*
+        ListObjectInstance[] instances;
+        instances  = FindObjectsOfType<ListObjectInstance>();
+        foreach (ListObjectInstance i in instances)
+        {
+            if (i != this)
+            {
+                i.itemSelected = false;
+            }
+        }*/
+
+
         View viewReferance = FindObjectOfType<View>();
 
         if (viewReferance != null) viewReferance.CallItemSelectedEvent(item);
