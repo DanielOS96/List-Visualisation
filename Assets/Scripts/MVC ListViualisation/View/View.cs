@@ -28,6 +28,8 @@ public class View : MonoBehaviour
     public OnInteractEvents onHovered;
     public OnInteractEvents onUnHovered;
     public OnInteractEvents onMoved;
+    public OnInteractEvents onClosed;
+    public OnInteractEvents onDeleted;
 
 
     public InfoPanel itemInfoPanel;             //Referance to the information panel script.
@@ -78,6 +80,8 @@ public class View : MonoBehaviour
     #endregion
 
 
+
+    //These are the events that comunicate with controller.
     #region Individual List Item Interacted Event Callers
     /// <summary>
     /// Fire the list item selected event. 
@@ -109,13 +113,21 @@ public class View : MonoBehaviour
 
     }
     /// <summary>
-    /// 
+    /// Fire the list item moved event.
     /// </summary>
-    /// <param name="origin">Origin list</param>
-    /// <param name="destination">Destination list</param>
+    /// <param name="item">Item to be moved.</param>
     public void CallItemMovedEvent(ListObjectInfo item)
     {
         if (onMoved != null) onMoved(item);
+    }
+
+    public void CallItemClosedEvent(ListObjectInfo item)
+    {
+        if (onClosed != null) onClosed(item);
+    }
+    public void CallItemDeletedEvent(ListObjectInfo item)
+    {
+        if (onDeleted != null) onDeleted(item);
     }
     #endregion
 

@@ -27,7 +27,7 @@ public class DirectoryNavigation : Model
 
     [Header("Known File Formats")]
     public string[] knownImageFileFormats = { ".gif", ".jpg", ".PNG", ".png" };
-    public string[] knownVideoFileFormats = { ".mov", "mp4", ".fmv" };
+    public string[] knownVideoFileFormats = { ".mov", ".mp4", ".fmv" };
     public string[] knownDocumentFileFormats = { ".doc", ".pdf" };
 
 
@@ -50,7 +50,14 @@ public class DirectoryNavigation : Model
     {
         base.ItemMoved(item);
 
-        FileMoved(item);
+        MoveFile(item);
+
+    }
+    public override void ItemDeleted(ListObjectInfo item)
+    {
+        base.ItemDeleted(item);
+
+        DeleteFile(item);
 
     }
     public override void ItemSelected(ListObjectInfo item)
@@ -59,11 +66,11 @@ public class DirectoryNavigation : Model
 
         if (item.ObjectType.Equals("folder"))
         {
-            FolderSelected(item);
+            SelectFolder(item);
         }
         else
         {
-            FileSelected(item);
+            SelectFile(item);
         }
     }
     public override void ItemHovered(ListObjectInfo item)
@@ -81,27 +88,33 @@ public class DirectoryNavigation : Model
 
 
 
-    private void FolderSelected(ListObjectInfo folder)
+    private void SelectFolder(ListObjectInfo folder)
     {
         //Debug.Log("Open Folder");
         pathToSearch = folder.ObjectInfo;
         BuildList();
     }
-    private void FileSelected(ListObjectInfo file)
+    private void SelectFile(ListObjectInfo file)
     {
         Debug.Log("Open File");
         LoadPNG(file.ObjectInfo);
     }
-    private void FileMoved(ListObjectInfo file)
+    private void MoveFile(ListObjectInfo file)
     {
-        string destinationURL = pathToSearch;
+        string destinationURL = pathToSearch + "/" + file.ObjectName;
         string originURL = file.ObjectInfo;
 
-        Debug.Log("Moving, Origin: " + originURL + " Destination: " + destinationURL+"/"+file.ObjectName);
+        Debug.Log("Moving, Origin: " + originURL + " Destination: " + destinationURL);
 
-        File.Move(originURL, destinationURL+"/"+file.ObjectName);
+        File.Move(originURL, destinationURL);
 
        
+        BuildList();
+    }
+    private void DeleteFile(ListObjectInfo file)
+    {
+        Debug.Log("Deleting File: "+file.ObjectInfo);
+        File.Delete(file.ObjectInfo);
         BuildList();
     }
 

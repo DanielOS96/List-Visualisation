@@ -54,6 +54,10 @@ public class Model : MonoBehaviour
     {
         //Debug.Log("Item Hovered... " + item.ObjectName);
     }
+    public virtual void ItemDeleted(ListObjectInfo item)
+    {
+        //Debug.Log("Item Deleted... " + item.ObjectName);
+    }
 
     //Let anyone listning have a copy of the list of items.
     //Pass the list to any subscribed methods.

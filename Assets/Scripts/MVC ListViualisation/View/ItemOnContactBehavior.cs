@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemOnContactBehavior : MonoBehaviour
 {
-    public enum ItemBehavior {moveItem, openItem }
+    public enum ItemBehavior {moveItem, openItem, closeItem, deleteItem }
 
     public ItemBehavior itemBehavior;
     public OnContactGameobject onContactEvents;
@@ -40,10 +40,16 @@ public class ItemOnContactBehavior : MonoBehaviour
         switch (itemBehavior)
         {
             case ItemBehavior.moveItem:
-                MoveItem(itemInstance);
+                itemInstance.ThisItemMoved();
                 break;
             case ItemBehavior.openItem:
-                OpenItem(itemInstance);
+                itemInstance.ThisItemSelected();
+                break;
+            case ItemBehavior.closeItem:
+                itemInstance.ThisItemClosed();
+                break;
+            case ItemBehavior.deleteItem:
+                itemInstance.ThisItemDeleted();
                 break;
             default:
                 Debug.Log("ItemOnContactBehavior: No Item behavior selected.");
@@ -51,38 +57,15 @@ public class ItemOnContactBehavior : MonoBehaviour
         }
 
 
-        
-    }
-
-
-    private void MoveItem(ListObjectInstance itemInstance)
-    {
-        View viewReferance = FindObjectOfType<View>();
-
-        viewReferance.CallItemMovedEvent(itemInstance.item);
-
-        PlayEffects();
-
-        Destroy(itemInstance.gameObject);
-    }
-
-    private void OpenItem(ListObjectInstance itemInstance)
-    {
-        itemInstance.ItemSelected();
-
-        PlayEffects();
-
-        Destroy(itemInstance.gameObject);
-    }
-
-
-
-    private void PlayEffects()
-    {
-
-        if(destructionFX!=null)Destroy(Instantiate(destructionFX, transform), 2);
+        if (destructionFX != null) Destroy(Instantiate(destructionFX, transform), 2);
         if (destructionAudio != null) source.PlayOneShot(destructionAudio);
+
+        Destroy(itemInstance.gameObject);
     }
+
+
+
+
 
 
 }

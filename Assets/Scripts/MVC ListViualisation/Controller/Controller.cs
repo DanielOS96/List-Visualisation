@@ -43,7 +43,8 @@ public class Controller : MonoBehaviour
         viewReferance.onHovered += OnItemHovered;
         viewReferance.onUnHovered += OnItemUnHovered;
         viewReferance.onMoved += OnItemMoved;
-
+        viewReferance.onClosed += OnItemClosed;
+        viewReferance.onDeleted += OnItemDeleted;
     }
     private void OnDisable()
     {
@@ -52,8 +53,8 @@ public class Controller : MonoBehaviour
         viewReferance.onHovered -= OnItemHovered;
         viewReferance.onUnHovered -= OnItemUnHovered;
         viewReferance.onMoved -= OnItemMoved;
-
-
+        viewReferance.onClosed -= OnItemClosed;
+        viewReferance.onDeleted -= OnItemDeleted;
     }
     #endregion
 
@@ -84,6 +85,15 @@ public class Controller : MonoBehaviour
     private void OnItemUnHovered(ListObjectInfo item)
     {
         viewReferance.ClearItemInfo();
+    }
+    private void OnItemClosed(ListObjectInfo item)
+    {
+        viewReferance.ClearList();
+        modelReferance.BuildList();  
+    }
+    private void OnItemDeleted(ListObjectInfo item)
+    {
+        modelReferance.ItemDeleted(item);
     }
 
     private void SetListView(List<ListObjectInfo> passedList)

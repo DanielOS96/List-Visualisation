@@ -16,10 +16,11 @@ public class ListBuilder : MonoBehaviour
     [Range(1, 10)]
     public int itemsInRow = 3;                  //The number of items in the row.
     [Header("Audio")]
-    public AudioSource source;
-    public AudioClip spawnSound;
+    public AudioSource source;                  //The source the sound will play from.
+    public AudioClip spawnSound;                //The sound an item will make when it spawns.
 
-    private Vector3 originPoition;
+    private Vector3 originPos;                  //The starting position of the spawner.
+    private Quaternion originRot;               //The starting rotation of the spawner.
 
     /// <summary>
     /// Build list of 'ListObjectInfo' objects in physical gameobject form.
@@ -28,6 +29,10 @@ public class ListBuilder : MonoBehaviour
     public void BuildList(List<ListObjectInfo> listToBuild)
     {
         StartCoroutine(ShowList(listToBuild));
+
+        //Reset Position
+        gameObject.transform.position = originPos;
+        gameObject.transform.rotation = originRot;
     }
 
 
@@ -39,7 +44,7 @@ public class ListBuilder : MonoBehaviour
     {
 
         /*
-         * NOTE thi could be improved by keeping
+         * NOTE this could be improved by keeping
          * a referance to each gameobject and deleting
          * the referance so that if the gameobject
          * gets unparented it will still be deleted.
@@ -53,7 +58,10 @@ public class ListBuilder : MonoBehaviour
 
 
 
-
+    private void Start()
+    {
+        originPos = gameObject.transform.position;
+    }
 
     private IEnumerator ShowList(List<ListObjectInfo> thisList)
     {
@@ -61,7 +69,7 @@ public class ListBuilder : MonoBehaviour
         float spawnX = 0;
         float spawnY = 0;
         float spawnZ = 0;
-
+        
         //Calculate spawn time for each item in list.
         float spawnTime = (float)1.5f / thisList.Count;
         if (thisList.Count <= 3) spawnTime = 0.2f;
@@ -111,6 +119,8 @@ public class ListBuilder : MonoBehaviour
 
         //Give the item information about what it is.
         itemVisualRepresentation.GetComponent<ListObjectInstance>().item = item;
+        //Give the item a referance to the view. **Dude this is stupid wise up and fix this**
+        itemVisualRepresentation.GetComponent<ListObjectInstance>().viewReferance = GetComponent<View>();
 
         //Show 3D model of icon.
         if (item.IconModel != null) ShowItemIconGameObject(item, itemVisualRepresentation);

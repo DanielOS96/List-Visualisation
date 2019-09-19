@@ -9,6 +9,7 @@ public class ListObjectInstance : MonoBehaviour
 {
 
     public ListObjectInfo item; //The item information for this object.
+    public View viewReferance;  //The referance to the view.
 
     public bool itemSelected;
 
@@ -25,7 +26,7 @@ public class ListObjectInstance : MonoBehaviour
      * The 'Controller' picks up on these events and preforms
      * the necassary actions.
      */
-    public void ItemSelected()
+    public void ThisItemSelected()
     {
         //Select this item.
         itemSelected = true;
@@ -42,22 +43,27 @@ public class ListObjectInstance : MonoBehaviour
             }
         }*/
 
-
-        View viewReferance = FindObjectOfType<View>();
-
-        if (viewReferance != null) viewReferance.CallItemSelectedEvent(item);
+        viewReferance.CallItemSelectedEvent(item);
     }
 
-    public void ItemHovered()
+    public void ThisItemHovered()
     {
-        View viewReferance = FindObjectOfType<View>();
-
-        if (viewReferance != null) viewReferance.CallItemHoveredEvent(item);
+        viewReferance.CallItemHoveredEvent(item);
     }
-    public void ItemUnHovered()
+    public void ThisItemUnHovered()
     {
-        View viewReferance = FindObjectOfType<View>();
-
-        if (viewReferance != null) viewReferance.CallItemUnHoveredEvent(item);
+        viewReferance.CallItemUnHoveredEvent(item);
+    }
+    public void ThisItemMoved()
+    {
+        viewReferance.CallItemMovedEvent(item);
+    }
+    public void ThisItemClosed()
+    {
+        viewReferance.CallItemClosedEvent(item);
+    }
+    public void ThisItemDeleted()
+    {
+        viewReferance.CallItemDeletedEvent(item);
     }
 }

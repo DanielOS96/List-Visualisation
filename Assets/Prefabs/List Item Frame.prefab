@@ -983,7 +983,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6817370383942571106}
-        m_MethodName: ItemSelected
+        m_MethodName: ThisItemSelected
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1009,7 +1009,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6817370383942571106}
-        m_MethodName: ItemHovered
+        m_MethodName: ThisItemHovered
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1036,7 +1036,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6817370383942571106}
-        m_MethodName: ItemUnHovered
+        m_MethodName: ThisItemUnHovered
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1076,6 +1076,7 @@ MonoBehaviour:
     ObjectType: 
     ObjectInfo: 
     IconModel: {fileID: 0}
+  viewReferance: {fileID: 0}
   itemSelected: 0
 --- !u!65 &1000752294
 BoxCollider:
