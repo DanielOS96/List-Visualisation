@@ -36,9 +36,17 @@ public class DirectoryNavigation : Model
     {
         base.BuildList();
 
+        ClearPNG();
+
+        if (!CheckValidPath(pathToSearch))
+        {
+            if (onInvalidRequest != null) onInvalidRequest.Invoke();
+            return;
+        }
         List<ListObjectInfo> newList = GenerateListObjectFromDirectory(pathToSearch);
 
         ListIsReady(newList);
+
     }
     public override void PreviousList()
     {
@@ -50,73 +58,96 @@ public class DirectoryNavigation : Model
     {
         base.ItemMoved(item);
 
-        MoveFile(item);
+        string destinationURL = pathToSearch + "/" + item.ObjectName;
+        string originURL = item.ObjectInfo;
+
+        if (!CheckValidPath(destinationURL))
+        {
+            if (onInvalidRequest != null) onInvalidRequest.Invoke(item.ObjectName);
+            return;
+        }
+
+        Debug.Log("Moving, Origin: " + originURL + " Destination: " + destinationURL);
+
+        File.Move(originURL, destinationURL);
+
+
+        BuildList();
+
+        ClearPNG();
 
     }
     public override void ItemDeleted(ListObjectInfo item)
     {
         base.ItemDeleted(item);
 
-        DeleteFile(item);
+        Debug.Log("Deleting File: " + item.ObjectInfo);
+        File.Delete(item.ObjectInfo);
+        BuildList();
+
+        ClearPNG();
 
     }
     public override void ItemSelected(ListObjectInfo item)
     {
         base.ItemSelected(item);
 
+        ClearPNG();
+
         if (item.ObjectType.Equals("folder"))
         {
-            SelectFolder(item);
+            //Debug.Log("Open Folder");
+
+            if (!CheckValidPath(item.ObjectInfo))
+            {
+                if (onInvalidRequest != null) onInvalidRequest.Invoke(item.ObjectInfo);
+                return;
+            }
+
+            pathToSearch = item.ObjectInfo;
+            BuildList();
         }
         else
         {
-            SelectFile(item);
+            //Debug.Log("Open File");
+            foreach (string ext in knownImageFileFormats)
+            {
+                if (item.ObjectType.Equals(ext))
+                {
+                    LoadPNG(item.ObjectInfo);
+                    return;
+                }
+            }
         }
+
     }
-    public override void ItemHovered(ListObjectInfo item)
+
+
+
+
+
+    private bool CheckValidPath(string path)
     {
-        base.ItemHovered(item);
+        DirectoryInfo dir = new DirectoryInfo(path);
+        FileInfo[] fileInfo = null;
+        DirectoryInfo[] dirInfo = null;
+
+        try
+        {
+            fileInfo = dir.GetFiles();
+            dirInfo = dir.GetDirectories();
+        }
+        catch (System.Exception e)
+        {
+            Debug.Log("Invalid Path: "+e);
+            return false;
+        }
+
+        return true;
     }
 
 
 
-
-
-
-
-
-
-
-
-    private void SelectFolder(ListObjectInfo folder)
-    {
-        //Debug.Log("Open Folder");
-        pathToSearch = folder.ObjectInfo;
-        BuildList();
-    }
-    private void SelectFile(ListObjectInfo file)
-    {
-        Debug.Log("Open File");
-        LoadPNG(file.ObjectInfo);
-    }
-    private void MoveFile(ListObjectInfo file)
-    {
-        string destinationURL = pathToSearch + "/" + file.ObjectName;
-        string originURL = file.ObjectInfo;
-
-        Debug.Log("Moving, Origin: " + originURL + " Destination: " + destinationURL);
-
-        File.Move(originURL, destinationURL);
-
-       
-        BuildList();
-    }
-    private void DeleteFile(ListObjectInfo file)
-    {
-        Debug.Log("Deleting File: "+file.ObjectInfo);
-        File.Delete(file.ObjectInfo);
-        BuildList();
-    }
 
 
     //modify the 'pathToSearch' var to go up a level.
@@ -151,6 +182,7 @@ public class DirectoryNavigation : Model
         DirectoryInfo dir = new DirectoryInfo(directory);
         FileInfo[] fileInfo = dir.GetFiles();
         DirectoryInfo[] dirInfo = dir.GetDirectories();
+
 
 
         foreach (DirectoryInfo d in dirInfo)
@@ -217,6 +249,10 @@ public class DirectoryNavigation : Model
             renderTarget.GetComponent<Renderer>().material.mainTexture = tex;
         }
 
+    }
+    private void ClearPNG()
+    {
+        renderTarget.GetComponent<Renderer>().material.mainTexture=null;
     }
 
 }

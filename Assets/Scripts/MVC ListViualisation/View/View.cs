@@ -77,6 +77,15 @@ public class View : MonoBehaviour
         listBuilder.BuildList(listToBuild);
     }
 
+    /// <summary>
+    /// Called when an invalid request has been made.
+    /// </summary>
+    public void InvalidRequestMade(string invalidItem =null)
+    {
+        Debug.Log("Ayyy makin invalid requests I see... well... don't be at that. " +
+            "Maybe I should play a sound or something to indicate your doing something dumb. " +invalidItem);
+    }
+
     #endregion
 
 

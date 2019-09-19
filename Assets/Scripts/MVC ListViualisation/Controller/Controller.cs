@@ -39,6 +39,7 @@ public class Controller : MonoBehaviour
     private void OnEnable()
     {
         modelReferance.onListReady += SetListView;
+        modelReferance.onInvalidRequest += OnInvalidRequest;
         viewReferance.onSelected += OnItemSelected;
         viewReferance.onHovered += OnItemHovered;
         viewReferance.onUnHovered += OnItemUnHovered;
@@ -49,6 +50,7 @@ public class Controller : MonoBehaviour
     private void OnDisable()
     {
         modelReferance.onListReady -= SetListView;
+        modelReferance.onInvalidRequest -= OnInvalidRequest;
         viewReferance.onSelected -= OnItemSelected;
         viewReferance.onHovered -= OnItemHovered;
         viewReferance.onUnHovered -= OnItemUnHovered;
@@ -67,6 +69,7 @@ public class Controller : MonoBehaviour
         viewReferance.ClearItemInfo();
     }
 
+
     private void OnItemSelected(ListObjectInfo item)
     {
         modelReferance.ItemSelected(item);
@@ -79,25 +82,35 @@ public class Controller : MonoBehaviour
     }
     private void OnItemHovered(ListObjectInfo item)
     {
+        modelReferance.ItemHovered(item);
         viewReferance.DisplayItemInfo(item);
-
     }
     private void OnItemUnHovered(ListObjectInfo item)
     {
+        modelReferance.ItemUnhovered(item);
         viewReferance.ClearItemInfo();
     }
     private void OnItemClosed(ListObjectInfo item)
     {
-        viewReferance.ClearList();
-        modelReferance.BuildList();  
+        modelReferance.BuildList();
     }
     private void OnItemDeleted(ListObjectInfo item)
     {
         modelReferance.ItemDeleted(item);
     }
 
+
+
+
+
+    private void OnInvalidRequest(string invalidItem = null)
+    {
+        viewReferance.InvalidRequestMade(invalidItem);
+    }
     private void SetListView(List<ListObjectInfo> passedList)
     {
+        print("zdfgzdfgzdfg");
+
         viewReferance.ClearList();
         viewReferance.InitializeList(passedList);
     }

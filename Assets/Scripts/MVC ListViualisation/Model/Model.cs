@@ -28,7 +28,9 @@ using UnityEngine;
 public class Model : MonoBehaviour
 {
     public delegate void ListReadyEvent(List<ListObjectInfo> listOfItems);
+    public delegate void InvalidRequestEvent(string invalidItem = null);
     public ListReadyEvent onListReady;
+    public InvalidRequestEvent onInvalidRequest;
 
 
     public virtual void BuildList()
@@ -54,9 +56,17 @@ public class Model : MonoBehaviour
     {
         //Debug.Log("Item Hovered... " + item.ObjectName);
     }
+    public virtual void ItemUnhovered(ListObjectInfo item)
+    {
+        //Debug.Log("Item Unovered... " + item.ObjectName);
+    }
     public virtual void ItemDeleted(ListObjectInfo item)
     {
         //Debug.Log("Item Deleted... " + item.ObjectName);
+    }
+    public virtual void ItemClosed(ListObjectInfo item)
+    {
+        //Debug.Log("Item Closed... " + item.ObjectName);
     }
 
     //Let anyone listning have a copy of the list of items.
