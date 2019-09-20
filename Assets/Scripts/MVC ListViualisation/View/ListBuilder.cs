@@ -19,9 +19,6 @@ public class ListBuilder : MonoBehaviour
     public AudioSource source;                  //The source the sound will play from.
     public AudioClip spawnSound;                //The sound an item will make when it spawns.
 
-    private Vector3 originPos;                  //The starting position of the spawner.
-    private Quaternion originRot;               //The starting rotation of the spawner.
-
     /// <summary>
     /// Build list of 'ListObjectInfo' objects in physical gameobject form.
     /// </summary>
@@ -30,9 +27,6 @@ public class ListBuilder : MonoBehaviour
     {
         StartCoroutine(ShowList(listToBuild));
 
-        //Reset Position
-        gameObject.transform.position = originPos;
-        gameObject.transform.rotation = originRot;
     }
 
 
@@ -57,11 +51,6 @@ public class ListBuilder : MonoBehaviour
     }
 
 
-
-    private void Start()
-    {
-        originPos = gameObject.transform.position;
-    }
 
     private IEnumerator ShowList(List<ListObjectInfo> thisList)
     {

@@ -26,6 +26,7 @@ public class Controller : MonoBehaviour
     public View viewReferance;          //Referance to the View script.
     public Model modelReferance;        //Referance to the Model script.
 
+    public bool listActive;
     public bool buildListOnAwake;       //Build list on awake.
 
 
@@ -38,19 +39,29 @@ public class Controller : MonoBehaviour
     #region Event Subscriptions
     private void OnEnable()
     {
+        //Model Events
         modelReferance.onListReady += SetListView;
         modelReferance.onInvalidRequest += OnInvalidRequest;
+        //View Item Events
         viewReferance.onSelected += OnItemSelected;
         viewReferance.onHovered += OnItemHovered;
         viewReferance.onUnHovered += OnItemUnHovered;
         viewReferance.onMoved += OnItemMoved;
         viewReferance.onClosed += OnItemClosed;
         viewReferance.onDeleted += OnItemDeleted;
+        //View Control Panel Events
+        viewReferance.onPreviousList += PreviousList;
+        viewReferance.onLeftRotatateList += RotateListLeft;
+        viewReferance.onRightRotatateList += RotateListRight;
+        viewReferance.onMoveListUp += MoveListUp;
+        viewReferance.onMoveListDown += MoveListDown;
     }
     private void OnDisable()
     {
+        //Model Events
         modelReferance.onListReady -= SetListView;
         modelReferance.onInvalidRequest -= OnInvalidRequest;
+        //View Item Events
         viewReferance.onSelected -= OnItemSelected;
         viewReferance.onHovered -= OnItemHovered;
         viewReferance.onUnHovered -= OnItemUnHovered;
@@ -62,17 +73,14 @@ public class Controller : MonoBehaviour
 
 
 
-    //Called by a button gameobject.
-    public void PreviousList()
-    {
-        modelReferance.PreviousList();
-        viewReferance.ClearItemInfo();
-    }
+    
 
 
+    #region Item Event Responses
     private void OnItemSelected(ListObjectInfo item)
     {
         modelReferance.ItemSelected(item);
+        viewReferance.ClearItemInfo();
         viewReferance.DisplayItemInfo(item, true);
     }
 
@@ -83,12 +91,13 @@ public class Controller : MonoBehaviour
     private void OnItemHovered(ListObjectInfo item)
     {
         modelReferance.ItemHovered(item);
+        viewReferance.ClearItemInfo();
         viewReferance.DisplayItemInfo(item);
     }
     private void OnItemUnHovered(ListObjectInfo item)
     {
         modelReferance.ItemUnhovered(item);
-        viewReferance.ClearItemInfo();
+        
     }
     private void OnItemClosed(ListObjectInfo item)
     {
@@ -98,7 +107,33 @@ public class Controller : MonoBehaviour
     {
         modelReferance.ItemDeleted(item);
     }
+    #endregion
 
+
+    #region Control Panel Event Responses
+    private void PreviousList()
+    {
+        modelReferance.PreviousList();
+        viewReferance.ClearItemInfo();
+    }
+    private void RotateListLeft()
+    {
+        viewReferance.RotateListLeft();
+    }
+    private void RotateListRight()
+    {
+        viewReferance.RotateListRight();
+    }
+    private void MoveListUp()
+    {
+        viewReferance.MoveListUp();
+    }
+    private void MoveListDown()
+    {
+        viewReferance.MoveListDown();
+    }
+
+    #endregion
 
 
 
@@ -109,8 +144,6 @@ public class Controller : MonoBehaviour
     }
     private void SetListView(List<ListObjectInfo> passedList)
     {
-        print("zdfgzdfgzdfg");
-
         viewReferance.ClearList();
         viewReferance.InitializeList(passedList);
     }

@@ -23,17 +23,25 @@ using UnityEngine.UI;
 public class View : MonoBehaviour
 {
 
-    public delegate void OnInteractEvents(ListObjectInfo item);
-    public OnInteractEvents onSelected;
-    public OnInteractEvents onHovered;
-    public OnInteractEvents onUnHovered;
-    public OnInteractEvents onMoved;
-    public OnInteractEvents onClosed;
-    public OnInteractEvents onDeleted;
+    public delegate void OnItemInteractEvents(ListObjectInfo item);
+    public OnItemInteractEvents onSelected;
+    public OnItemInteractEvents onHovered;
+    public OnItemInteractEvents onUnHovered;
+    public OnItemInteractEvents onMoved;
+    public OnItemInteractEvents onClosed;
+    public OnItemInteractEvents onDeleted;
+
+    public delegate void OnControlPanelEvents();
+    public OnControlPanelEvents onPreviousList;
+    public OnControlPanelEvents onLeftRotatateList;
+    public OnControlPanelEvents onRightRotatateList;
+    public OnControlPanelEvents onMoveListUp;
+    public OnControlPanelEvents onMoveListDown;
 
 
     public InfoPanel itemInfoPanel;             //Referance to the information panel script.
     public ListBuilder listBuilder;             //Referance to the list builder script.
+    public ListMovement listMovement;           //Referance to the list movement script.
 
 
     #region Item Controls
@@ -59,7 +67,6 @@ public class View : MonoBehaviour
 
 
     #region List Controls
-
     /// <summary>
     /// Delete each gameobejct in physical list.
     /// </summary>
@@ -74,7 +81,10 @@ public class View : MonoBehaviour
     /// <param name="listToBuild">List of objects to build</param>
     public void InitializeList(List<ListObjectInfo> listToBuild)
     {
+        //Build the list.
         listBuilder.BuildList(listToBuild);
+        //Reset the position of list.
+        listMovement.ResetPosition();
     }
 
     /// <summary>
@@ -88,7 +98,25 @@ public class View : MonoBehaviour
 
     #endregion
 
-
+    //Called from the controller.
+    #region ListMovement
+    public void RotateListLeft()
+    {
+        listMovement.RotateLeft();
+    }
+    public void RotateListRight()
+    {
+        listMovement.RotateRight();
+    }
+    public void MoveListUp()
+    {
+        listMovement.MoveUp();
+    }
+    public void MoveListDown()
+    {
+        listMovement.MoveDown();
+    }
+    #endregion
 
     //These are the events that comunicate with controller.
     #region Individual List Item Interacted Event Callers
@@ -141,6 +169,28 @@ public class View : MonoBehaviour
     #endregion
 
 
-
+    //These are the events that communicate with the controller
+    #region Control Panel Interacted Event Callers
+    public void CallPreviousList()
+    {
+        if (onPreviousList != null) onPreviousList.Invoke();
+    }
+    public void CallLeftRotateList()
+    {
+        if (onLeftRotatateList != null) onLeftRotatateList.Invoke();
+    }
+    public void CallRightRotateList()
+    {
+        if (onRightRotatateList != null) onRightRotatateList.Invoke();
+    }
+    public void CallMoveListUp()
+    {
+        if (onMoveListUp != null) onMoveListUp.Invoke();
+    }
+    public void CallMoveListDown()
+    {
+        if (onMoveListDown != null) onMoveListDown.Invoke();
+    }
+    #endregion
 
 }

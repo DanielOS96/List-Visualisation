@@ -148,8 +148,6 @@ public class DirectoryNavigation : Model
 
 
 
-
-
     //modify the 'pathToSearch' var to go up a level.
     //Return true if moving up directory is sucessful.
     private bool MoveUpDirectory()
@@ -236,6 +234,7 @@ public class DirectoryNavigation : Model
     }
 
 
+    //SHould this be in the View?
     private void LoadPNG(string filePath)
     {
         Texture2D tex = null;
