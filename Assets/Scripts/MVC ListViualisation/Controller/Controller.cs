@@ -26,7 +26,7 @@ public class Controller : MonoBehaviour
     public View viewReferance;          //Referance to the View script.
     public Model modelReferance;        //Referance to the Model script.
 
-    public bool listActive;
+    public bool listActive;             
     public bool buildListOnAwake;       //Build list on awake.
 
 
@@ -49,6 +49,7 @@ public class Controller : MonoBehaviour
         viewReferance.onMoved += OnItemMoved;
         viewReferance.onClosed += OnItemClosed;
         viewReferance.onDeleted += OnItemDeleted;
+        viewReferance.onGrabbed += OnItemGrabbed;
         //View Control Panel Events
         viewReferance.onPreviousList += PreviousList;
         viewReferance.onLeftRotatateList += RotateListLeft;
@@ -68,6 +69,13 @@ public class Controller : MonoBehaviour
         viewReferance.onMoved -= OnItemMoved;
         viewReferance.onClosed -= OnItemClosed;
         viewReferance.onDeleted -= OnItemDeleted;
+        viewReferance.onGrabbed -= OnItemGrabbed;
+        //View Control Panel Events
+        viewReferance.onPreviousList -= PreviousList;
+        viewReferance.onLeftRotatateList -= RotateListLeft;
+        viewReferance.onRightRotatateList -= RotateListRight;
+        viewReferance.onMoveListUp -= MoveListUp;
+        viewReferance.onMoveListDown -= MoveListDown;
     }
     #endregion
 
@@ -77,35 +85,46 @@ public class Controller : MonoBehaviour
 
 
     #region Item Event Responses
-    private void OnItemSelected(ListObjectInfo item)
+    private void OnItemSelected(ListObjectInfo objectInfo)
     {
-        modelReferance.ItemSelected(item);
-        viewReferance.ClearItemInfo();
-        viewReferance.DisplayItemInfo(item, true);
+        objectInfo.ObjectIsActive = true;
+
+        modelReferance.ItemSelected(objectInfo);
     }
 
-    private void OnItemMoved(ListObjectInfo item)
+    private void OnItemMoved(ListObjectInfo objectInfo)
     {
-        modelReferance.ItemMoved(item);
+        objectInfo.ObjectIsActive = false;
+
+        modelReferance.ItemMoved(objectInfo);
     }
-    private void OnItemHovered(ListObjectInfo item)
+    private void OnItemHovered(ListObjectInfo objectInfo)
     {
-        modelReferance.ItemHovered(item);
+        modelReferance.ItemHovered(objectInfo);
         viewReferance.ClearItemInfo();
-        viewReferance.DisplayItemInfo(item);
+        viewReferance.DisplayItemInfo(objectInfo, true);
     }
-    private void OnItemUnHovered(ListObjectInfo item)
+    private void OnItemUnHovered(ListObjectInfo objectInfo)
     {
-        modelReferance.ItemUnhovered(item);
+        modelReferance.ItemUnhovered(objectInfo);
         
     }
-    private void OnItemClosed(ListObjectInfo item)
+    private void OnItemClosed(ListObjectInfo objectInfo)
     {
-        modelReferance.BuildList();
+        objectInfo.ObjectIsActive = false;
+
+
+        viewReferance.ReturnItemToOrigin(objectInfo);
     }
-    private void OnItemDeleted(ListObjectInfo item)
+    private void OnItemDeleted(ListObjectInfo objectInfo)
     {
-        modelReferance.ItemDeleted(item);
+        objectInfo.ObjectIsActive = false;
+
+        modelReferance.ItemDeleted(objectInfo);
+    }
+    private void OnItemGrabbed(ListObjectInfo objectInfo)
+    {
+
     }
     #endregion
 

@@ -31,7 +31,7 @@ public class DirectoryNavigation : Model
     public string[] knownDocumentFileFormats = { ".doc", ".pdf" };
 
 
-
+    
     public override void BuildList()
     {
         base.BuildList();
@@ -126,6 +126,16 @@ public class DirectoryNavigation : Model
 
 
 
+
+
+
+
+
+
+
+
+
+    //Check there are no errors accesing path.
     private bool CheckValidPath(string path)
     {
         DirectoryInfo dir = new DirectoryInfo(path);
@@ -234,7 +244,8 @@ public class DirectoryNavigation : Model
     }
 
 
-    //SHould this be in the View?
+    //Should this be in the View?
+    //Load image to render target.
     private void LoadPNG(string filePath)
     {
         Texture2D tex = null;
@@ -249,6 +260,7 @@ public class DirectoryNavigation : Model
         }
 
     }
+    //Clear image from render target.
     private void ClearPNG()
     {
         renderTarget.GetComponent<Renderer>().material.mainTexture=null;

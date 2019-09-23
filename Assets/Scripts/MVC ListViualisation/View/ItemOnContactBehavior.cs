@@ -10,8 +10,9 @@ public class ItemOnContactBehavior : MonoBehaviour
     public OnContactGameobject onContactEvents;
 
 
-    public GameObject destructionFX;
-    public AudioClip destructionAudio;
+    public GameObject contactFX;
+    public AudioClip contactAudio;
+    public bool destroyAfter;
 
     private AudioSource source;
 
@@ -52,15 +53,15 @@ public class ItemOnContactBehavior : MonoBehaviour
                 itemInstance.ThisItemDeleted();
                 break;
             default:
-                Debug.Log("ItemOnContactBehavior: No Item behavior selected.");
+                Debug.Log("ItemOnContactBehavior: No item behavior selected.");
                 break;
         }
 
 
-        if (destructionFX != null) Destroy(Instantiate(destructionFX, transform), 2);
-        if (destructionAudio != null) source.PlayOneShot(destructionAudio);
+        if (contactFX != null) Destroy(Instantiate(contactFX, transform), 2);
+        if (contactAudio != null) source.PlayOneShot(contactAudio);
 
-        Destroy(itemInstance.gameObject);
+        if (destroyAfter) Destroy(itemInstance.gameObject);
     }
 
 

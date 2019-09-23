@@ -10,7 +10,7 @@ public class ListMovement : MonoBehaviour
     public float rotationDegrees = 20;
 
 
-    private int maxVerticalMoves;
+    private int maxVerticalMoves = 10;
     private int index;
     private Vector3 originPos;                  //The starting position of the list.
     private Quaternion originRot;               //The starting rotation of the list.
@@ -22,8 +22,6 @@ public class ListMovement : MonoBehaviour
         gameObject.transform.position = originPos;
         gameObject.transform.rotation = originRot;
 
-        StopAllCoroutines();
-        StartCoroutine(spawnDelay());
     }
 
     public void RotateLeft()
@@ -65,7 +63,19 @@ public class ListMovement : MonoBehaviour
     }
 
 
-    private IEnumerator spawnDelay()
+
+
+
+
+
+    private void Start()
+    {
+        originPos = gameObject.transform.position;
+        originRot = gameObject.transform.rotation;
+    }
+
+    //Wait to compensate for spawning delay.
+    private IEnumerator SpawnDelay()
     {
         yield return new WaitForSeconds(5);
 
@@ -81,12 +91,7 @@ public class ListMovement : MonoBehaviour
 
     }
 
-    private void Start()
-    {
-        originPos = gameObject.transform.position;
-        originRot = gameObject.transform.rotation;
-    }
-
+    //Calculate height by getting highest position child.
     private float CalculateHeight()
     {
         float tallestHeight = 0;

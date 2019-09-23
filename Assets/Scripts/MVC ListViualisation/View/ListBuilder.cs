@@ -8,6 +8,9 @@ using UnityEngine;
 /// </summary>
 public class ListBuilder : MonoBehaviour
 {
+    public bool BuildInProgress { get; private set; } //Weather or not the build is currently in progress.
+
+
     public GameObject listItemObjectPrefab;     //The visual gameobject representation of the list item.
     [Header("Visual Settings")]
     public GameObject spawnEffectPrefab;        //The effect that will play when the item is spawned.
@@ -27,6 +30,8 @@ public class ListBuilder : MonoBehaviour
     {
         StartCoroutine(ShowList(listToBuild));
 
+        //Build is in progress.
+        BuildInProgress = true;
     }
 
 
@@ -94,6 +99,8 @@ public class ListBuilder : MonoBehaviour
             count++;
         }
 
+        //List building has finished.
+        BuildInProgress = false;
     }
 
     private IEnumerator SpawnItem(Vector3 spawnPosition, ListObjectInfo item, float spawnTime)
@@ -101,15 +108,27 @@ public class ListBuilder : MonoBehaviour
         //The drop start position is slightly above spawn position by the ammount of the distance between items
         GameObject itemVisualRepresentation = Instantiate(listItemObjectPrefab, transform.position + spawnPosition, transform.localRotation);
         Vector3 dropStartPos = new Vector3(spawnPosition.x, spawnPosition.y + distBetweenItemCenter, spawnPosition.z);
+        ListObjectInstance itemInstance = itemVisualRepresentation.GetComponent<ListObjectInstance>();
+
 
         itemVisualRepresentation.transform.SetParent(gameObject.transform);
         itemVisualRepresentation.name = item.ObjectName;
         itemVisualRepresentation.transform.localPosition = dropStartPos;
 
+        item.ObjectTransform = itemVisualRepresentation.transform;
+        item.ParentTransform = transform;
+        item.OriginPos = spawnPosition;
+        item.OriginRot = new Quaternion(0, 0, 0, 0);
+
         //Give the item information about what it is.
-        itemVisualRepresentation.GetComponent<ListObjectInstance>().item = item;
+        itemInstance.itemInfo = item;
         //Give the item a referance to the view. **Dude this is stupid wise up and fix this**
-        itemVisualRepresentation.GetComponent<ListObjectInstance>().viewReferance = GetComponent<View>();
+        itemInstance.viewReferance = GetComponent<View>();
+
+        
+
+        
+
 
         //Show 3D model of icon.
         if (item.IconModel != null) ShowItemIconGameObject(item, itemVisualRepresentation);

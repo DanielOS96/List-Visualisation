@@ -23,13 +23,14 @@ using UnityEngine.UI;
 public class View : MonoBehaviour
 {
 
-    public delegate void OnItemInteractEvents(ListObjectInfo item);
+    public delegate void OnItemInteractEvents(ListObjectInfo itemInfo);
     public OnItemInteractEvents onSelected;
     public OnItemInteractEvents onHovered;
     public OnItemInteractEvents onUnHovered;
     public OnItemInteractEvents onMoved;
     public OnItemInteractEvents onClosed;
     public OnItemInteractEvents onDeleted;
+    public OnItemInteractEvents onGrabbed;
 
     public delegate void OnControlPanelEvents();
     public OnControlPanelEvents onPreviousList;
@@ -63,6 +64,14 @@ public class View : MonoBehaviour
     {
         itemInfoPanel.ClearText();
     }
+
+    public void ReturnItemToOrigin(ListObjectInfo objectInfo)
+    {
+        objectInfo.ObjectTransform.SetParent(objectInfo.ParentTransform);
+        objectInfo.ObjectTransform.localPosition = objectInfo.OriginPos;
+        objectInfo.ObjectTransform.localRotation = objectInfo.OriginRot;
+    }
+
     #endregion
 
 
@@ -99,7 +108,7 @@ public class View : MonoBehaviour
     #endregion
 
     //Called from the controller.
-    #region ListMovement
+    #region ListMovement Controls
     public void RotateListLeft()
     {
         listMovement.RotateLeft();
@@ -117,6 +126,7 @@ public class View : MonoBehaviour
         listMovement.MoveDown();
     }
     #endregion
+
 
     //These are the events that comunicate with controller.
     #region Individual List Item Interacted Event Callers
@@ -158,10 +168,28 @@ public class View : MonoBehaviour
         if (onMoved != null) onMoved(item);
     }
 
+    /// <summary>
+    /// Fire the list item grabbed event.
+    /// </summary>
+    /// <param name="item">Item to be moved.</param>
+    public void CallItemGrabbedEvent(ListObjectInfo item)
+    {
+        if (onGrabbed != null) onGrabbed(item);
+    }
+
+    /// <summary>
+    /// Fire the list item closed event.
+    /// </summary>
+    /// <param name="item">Item to be moved.</param>
     public void CallItemClosedEvent(ListObjectInfo item)
     {
         if (onClosed != null) onClosed(item);
     }
+
+    /// <summary>
+    /// Fire the list item deleted event.
+    /// </summary>
+    /// <param name="item">Item to be moved.</param>
     public void CallItemDeletedEvent(ListObjectInfo item)
     {
         if (onDeleted != null) onDeleted(item);
