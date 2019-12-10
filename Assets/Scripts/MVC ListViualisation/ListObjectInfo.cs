@@ -9,13 +9,14 @@ public struct ListObjectInfo
     public string ObjectType;   //i.e file type
     public string ObjectInfo;   //i.e. path of file.
 
-    public bool ObjectIsActive;
+    public bool ObjectIsActive;         //Is this current object active.
 
-    public GameObject IconModel;//3D model to represent this object.
-    public Transform ObjectTransform;
-    public Transform ParentTransform;
-    public Vector3 OriginPos;
-    public Quaternion OriginRot;
+    public GameObject IconModel;        //3D model to represent this object.
+    public Transform ObjectTransform;   //The transfrom this object is associated with.
+    public Transform ParentTransform;   //The parent transfrom this object is associated with.
+    public Vector3 OriginPos;           //The origin position of this object instance.
+    public Quaternion OriginRot;        //The origin rotatino of this object instance.
+
 
     public ListObjectInfo(string objectName, string objectType, string objectInfo, bool objectIsActive,
         GameObject iconModel, Transform objectTranform, Transform parentTransform, Vector3 originPos, Quaternion originRot)

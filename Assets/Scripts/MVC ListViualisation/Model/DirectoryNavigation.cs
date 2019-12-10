@@ -69,7 +69,7 @@ public class DirectoryNavigation : Model
 
         Debug.Log("Moving, Origin: " + originURL + " Destination: " + destinationURL);
 
-        File.Move(originURL, destinationURL);
+        //File.Move(originURL, destinationURL);
 
 
         BuildList();
